@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage("Build") {
             steps {
-                sh "npm install"
+                sh "npm ci"
                 sh "npm run build"
             }
         }
@@ -19,7 +19,7 @@ pipeline {
                 } 
             }
         }
-        stage('Upload') {
+        stage('Upload to s3') {
             steps {
                 withAWS(region: 'us-west-2', credentials:'abcd') {
                     s3Upload(bucket:"unique-name", includePathPattern:'**/*');
